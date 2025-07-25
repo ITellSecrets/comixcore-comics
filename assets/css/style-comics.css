@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Comic Specific Styles (Minimalist)
+   ========================================================================== */
+
+/* Single Comic Page */
+article.post-type-comic {
+    margin-bottom: 2em;
+    text-align: center; /* Center comic content */
+}
+
+.comic-series-title {
+    font-size: 1.8em;
+    margin-bottom: 0.2em;
+    color: #555; /* Slightly muted color for series title */
+}
+
+.comic-issue-title {
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: #777; /* Slightly muted color for issue title */
+}
+
+.comic-page-number {
+    font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    color: #888; /* Even more muted for page number */
+}
+
+.comic-image-wrapper {
+    margin-bottom: 1.5em;
+    line-height: 0; /* Remove extra space below image */
+    background-color: #fcfcfc; /* Very subtle background for comic image area */
+    border: 1px solid #eee; /* Light border around comic image */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Very light shadow */
+}
+
+.comic-page-image {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove extra space below image */
+}
+
+.comic-image-placeholder {
+    background-color: #f8f8f8;
+    border: 1px dashed #ccc;
+    padding: 50px 20px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 1.5em;
+}
+
+/* Comic Navigation (Footer) */
+.comic-navigation {
+    display: flex;
+    justify-content: space-between; /* Spread links across the footer */
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid #eee; /* Separator from comic content */
+    margin-top: 2em;
+    font-size: 1.1em;
+    flex-wrap: wrap; /* Allow navigation items to wrap on smaller screens */
+    gap: 10px; /* Space between navigation items */
+}
+
+.comic-navigation span {
+    flex: 1; /* Allow spans to grow and shrink */
+    text-align: center; /* Center individual navigation links */
+}
+
+.comic-navigation .nav-first-page,
+.comic-navigation .nav-previous {
+    text-align: left; /* Align first/previous to the left */
+}
+
+.comic-navigation .nav-next,
+.comic-navigation .nav-last-page {
+    text-align: right; /* Align next/last to the right */
+}
+
+.comic-navigation a {
+    display: inline-block; /* Allow padding and sizing */
+    padding: 8px 12px;
+    background-color: #0073aa; /* Standard WordPress blue for buttons */
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent breaking of text in button */
+}
+
+.comic-navigation a:hover {
+    background-color: #005a8d; /* Darker blue on hover */
+    text-decoration: none;
+}
+
+.comic-navigation span.disabled {
+    /* Style for disabled/placeholder navigation slots */
+    visibility: hidden; /* Hide the placeholder but keep its space */
+    padding: 8px 12px; /* Match padding of active links for consistent spacing */
+    display: inline-block; /* Ensure it takes space */
+}
+
+/* Comic Series Grid (Comic Hub) */
+.comic-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 30px; /* Space between grid items */
+    margin-top: 2em;
+}
+
+.comic-series-item {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comic-series-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.comic-issue-cover-wrapper {
+    margin-bottom: 1em;
+}
+
+.comic-issue-cover {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.comic-series-title-grid,
+.comic-issue-title-grid {
+    font-size: 1.3em;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em;
+    color: #333;
+}
+
+.comic-series-description,
+.comic-issue-description {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Vertical Scroll Issue View */
+.comic-vertical-scroll-wrapper {
+    margin-top: 2em;
+    line-height: 0; /* Remove vertical gaps between images */
+}
+
+.single-comic-page-in-vertical-issue {
+    margin-bottom: 0; /* Ensure no spacing between pages */
+    line-height: 0; /* Crucial for vertical images */
+}
+
+/* Galleries */
+.gallery {
+    margin-bottom: 1.5em;
+}
+
+.gallery-item {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+    max-width: 25%; /* Adjust as needed for column layout */
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.gallery-columns-1 .gallery-item {
+    max-width: 100%;
+}
+.gallery-columns-2 .gallery-item {
+    max-width: 50%;
+}
+.gallery-columns-3 .gallery-item {
+    max-width: 33.33%;
+}
+/* Add more for other column counts */
+
+.gallery-caption {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 0.5em;
+}
+
+/* --- Media Query: max-width 768px (tablets and smaller) --- */
+@media only screen and (max-width: 768px) {
+
+ /* Adjust comic grid for smaller screens */
+    .comic-posts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .comic-navigation {
+        flex-direction: column; /* Stack navigation buttons */
+        gap: 5px; /* Reduce gap between stacked buttons */
+        font-size: 1em;
+    }
+
+    .comic-navigation span {
+        width: 100%; /* Make each button take full width */
+        text-align: center;
+    }
+
+    .comic-navigation a {
+        width: calc(100% - 24px); /* Full width minus padding */
+        display: block; /* Ensure it takes full width */
+    }
+}
+
+/* --- Media Query: max-width 480px (phones) --- */
+@media only screen and (max-width: 480px) {
+
+ /* Comic navigation font size for mobile */
+    .comic-navigation a {
+        font-size: 0.9em;
+    }
+}
