@@ -65,6 +65,7 @@ class ComixCore_Comics {
         require_once COMIXCORE_COMICS_PLUGIN_DIR . 'includes/template-loader.php';
         require_once COMIXCORE_COMICS_PLUGIN_DIR . 'includes/page-templates.php';
         require_once COMIXCORE_COMICS_PLUGIN_DIR . 'includes/enqueue.php';
+	require_once COMIXCORE_COMICS_PLUGIN_DIR . 'includes/customizer.php';
         // Add more includes here as you develop more features (e.g., admin, shortcodes, widgets)
     }
 

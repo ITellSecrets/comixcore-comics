@@ -1,56 +1,123 @@
 jQuery(document).ready(function($) {
-    // Media uploader for Comic Page Image (using IDs to match meta-boxes.php)
+    // --- Media uploader for Comic Page Image (on 'comic' post type edit screen) ---
     var comicPageImageFrame;
 
-    // Use the correct button ID: comixcore_comic_page_image_button
     $('#comixcore_comic_page_image_button').on('click', function(e) {
         e.preventDefault();
 
-        // If the media frame already exists, reopen it.
         if (comicPageImageFrame) {
             comicPageImageFrame.open();
             return;
         }
 
-        // Create a new media frame
         comicPageImageFrame = wp.media({
             title: 'Select or Upload Comic Page Image',
             button: {
                 text: 'Use this image'
             },
-            multiple: false // Set to true if you want to allow multiple images
+            multiple: false
         });
 
-        // When an image is selected in the media frame...
         comicPageImageFrame.on('select', function() {
-            // Get media attachment details from the frame state
             var attachment = comicPageImageFrame.state().get('selection').first().toJSON();
-
-            // Send the attachment id to our hidden input (using correct ID: comixcore_comic_page_image_id)
             $('#comixcore_comic_page_image_id').val(attachment.id);
-
-            // Send the attachment URL to our image preview (using correct ID: comixcore_comic_page_image_preview)
             $('#comixcore_comic_page_image_preview').html('<img src="' + attachment.url + '" style="max-width:150px; height:auto;" />');
-
-            // Show the remove image button (using correct ID: comixcore_comic_page_image_remove_button)
             $('#comixcore_comic_page_image_remove_button').show();
         });
 
-        // Open the media frame
         comicPageImageFrame.open();
     });
 
-    // Remove image button (using correct ID: comixcore_comic_page_image_remove_button)
     $('#comixcore_comic_page_image_remove_button').on('click', function() {
-        // Clear the hidden input and preview (using correct IDs)
         $('#comixcore_comic_page_image_id').val('');
         $('#comixcore_comic_page_image_preview').html('');
         $(this).hide();
         return false;
     });
 
-    // Handle initial state if image is already selected (using correct ID: comixcore_comic_page_image_id)
     if ($('#comixcore_comic_page_image_id').val() === '') {
         $('#comixcore_comic_page_image_remove_button').hide();
+    }
+
+
+    // --- Media uploader for Series Logo (on 'comic_series' taxonomy edit screen) ---
+    var seriesLogoFrame;
+
+    $('#comixcore_series_logo_button').on('click', function(e) {
+        e.preventDefault();
+
+        if (seriesLogoFrame) {
+            seriesLogoFrame.open();
+            return;
+        }
+
+        seriesLogoFrame = wp.media({
+            title: 'Select or Upload Series Logo',
+            button: {
+                text: 'Use this logo'
+            },
+            multiple: false
+        });
+
+        seriesLogoFrame.on('select', function() {
+            var attachment = seriesLogoFrame.state().get('selection').first().toJSON();
+            $('#comixcore_series_logo_id').val(attachment.id);
+            $('#comixcore_series_logo_preview').html('<img src="' + attachment.url + '" style="max-width:150px; height:auto;" />');
+            $('#comixcore_series_logo_remove_button').show();
+        });
+
+        seriesLogoFrame.open();
+    });
+
+    $('#comixcore_series_logo_remove_button').on('click', function() {
+        $('#comixcore_series_logo_id').val('');
+        $('#comixcore_series_logo_preview').html('');
+        $(this).hide();
+        return false;
+    });
+
+    if ($('#comixcore_series_logo_id').val() === '') {
+        $('#comixcore_series_logo_remove_button').hide();
+    }
+
+
+    // --- Media uploader for Issue Cover (on 'comic_issues' taxonomy edit screen) ---
+    var issueCoverFrame;
+
+    $('#comixcore_issue_cover_button').on('click', function(e) {
+        e.preventDefault();
+
+        if (issueCoverFrame) {
+            issueCoverFrame.open();
+            return;
+        }
+
+        issueCoverFrame = wp.media({
+            title: 'Select or Upload Issue Cover Image',
+            button: {
+                text: 'Use this image'
+            },
+            multiple: false
+        });
+
+        issueCoverFrame.on('select', function() {
+            var attachment = issueCoverFrame.state().get('selection').first().toJSON();
+            $('#comixcore_issue_cover_id').val(attachment.id);
+            $('#comixcore_issue_cover_preview').html('<img src="' + attachment.url + '" style="max-width:150px; height:auto;" />');
+            $('#comixcore_issue_cover_remove_button').show();
+        });
+
+        issueCoverFrame.open();
+    });
+
+    $('#comixcore_issue_cover_remove_button').on('click', function() {
+        $('#comixcore_issue_cover_id').val('');
+        $('#comixcore_issue_cover_preview').html('');
+        $(this).hide();
+        return false;
+    });
+
+    if ($('#comixcore_issue_cover_id').val() === '') {
+        $('#comixcore_issue_cover_remove_button').hide();
     }
 });

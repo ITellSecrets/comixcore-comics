@@ -2,7 +2,7 @@
    Comic Specific Styles (Minimalist)
    ========================================================================== */
 
-/* Single Comic Page */
+/* --- Single Comic Page Elements --- */
 article.post-type-comic {
     margin-bottom: 2em;
     text-align: center; /* Center comic content */
@@ -11,37 +11,46 @@ article.post-type-comic {
 .comic-series-title {
     font-size: 1.8em;
     margin-bottom: 0.2em;
-    color: #555; /* Slightly muted color for series title */
+    color: #555; /* Slightly muted grey for series title */
 }
 
 .comic-issue-title {
     font-size: 1.4em;
     margin-top: 0;
     margin-bottom: 0.5em;
-    color: #777; /* Slightly muted color for issue title */
+    color: #777; /* Slightly muted grey for issue title */
 }
 
 .comic-page-number {
     font-size: 1.1em;
     margin-top: 0;
     margin-bottom: 1em;
-    color: #888; /* Even more muted for page number */
+    color: #888; /* Even more muted grey for page number */
 }
 
+/* --- Single Comic Page Elements --- */
+/* The article.post-type-comic centering and max-width are already handled
+   well by your wnwstyle.css, so we focus on the elements inside it. */
+
 .comic-image-wrapper {
-    margin-bottom: 1.5em;
+    margin: 0 auto 1.5em auto; /* Center the wrapper horizontally, and add bottom margin */
     line-height: 0; /* Remove extra space below image */
     background-color: #fcfcfc; /* Very subtle background for comic image area */
-    border: 1px solid #eee; /* Light border around comic image */
+    border: 1px solid #eee; /* Light grey border around comic image */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Very light shadow */
+    width: 100%; /* IMPORTANT: Make it fill the available width of its parent */
+    box-sizing: border-box; /* Ensures padding/border are included in the 100% width */
+    text-align: center; /* Ensure contents are centered if they don't fill */
 }
 
 .comic-page-image {
-    max-width: 100%;
-    height: auto;
-    display: block; /* Remove extra space below image */
+    max-width: 100%; /* Ensures image doesn't overflow its container */
+    width: 100%; /* IMPORTANT: Force image to fill 100% of its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image, prevents inline spacing */
+    margin: 0 auto; /* Ensure image itself is centered within its wrapper */
+    padding: 0; /* Ensure no extra padding causing issues */
 }
-
 .comic-image-placeholder {
     background-color: #f8f8f8;
     border: 1px dashed #ccc;
@@ -52,24 +61,27 @@ article.post-type-comic {
     margin-bottom: 1.5em;
 }
 
-/* Comic Navigation (Footer) */
+/* --- Comic Navigation (Footer) --- */
 .comic-navigation {
     display: flex;
     justify-content: space-between; /* Spread links across the footer */
     align-items: center;
     padding: 15px 0;
-    border-top: 1px solid #eee; /* Separator from comic content */
-    margin-top: 2em;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
     font-size: 1.1em;
     flex-wrap: wrap; /* Allow navigation items to wrap on smaller screens */
     gap: 10px; /* Space between navigation items */
 }
 
+/* Base style for navigation links/spans */
 .comic-navigation span {
     flex: 1; /* Allow spans to grow and shrink */
-    text-align: center; /* Center individual navigation links */
+    text-align: center; /* Default center alignment */
 }
 
+/* Specific text alignment for navigation links */
 .comic-navigation .nav-first-page,
 .comic-navigation .nav-previous {
     text-align: left; /* Align first/previous to the left */
@@ -80,87 +92,223 @@ article.post-type-comic {
     text-align: right; /* Align next/last to the right */
 }
 
+/* Base style for navigation buttons */
 .comic-navigation a {
     display: inline-block; /* Allow padding and sizing */
-    padding: 8px 12px;
-    background-color: #0073aa; /* Standard WordPress blue for buttons */
-    color: #fff;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    text-decoration: none; /* Remove underline by default */
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333; /* Dark grey text */
+    background-color: #f9f9f9; /* Light grey background */
+    transition: all 0.2s ease-in-out; /* Smooth transitions for all properties */
     white-space: nowrap; /* Prevent breaking of text in button */
 }
 
 .comic-navigation a:hover {
-    background-color: #005a8d; /* Darker blue on hover */
-    text-decoration: none;
+    background-color: #e5e5e5; /* Darker grey background on hover */
+    border-color: #aaa; /* Darker grey border on hover */
+    color: #000; /* Black text on hover */
+}
+
+/* Specific styling for first/last page links (adjusted for grayscale) */
+.comic-navigation .nav-first-page a,
+.comic-navigation .nav-last-page a {
+    font-weight: bold;
+    background-color: #f0f0f0; /* Slightly different light grey for emphasis */
+    border-color: #d0d0d0;
+}
+
+.comic-navigation .nav-first-page a:hover,
+.comic-navigation .nav-last-page a:hover {
+    background-color: #e0e0e0;
+}
+
+/* Positioning adjustments for navigation */
+.comic-navigation .nav-previous {
+    margin-right: auto; /* Push previous to the left */
+}
+
+.comic-navigation .nav-next {
+    margin-left: auto; /* Push next to the right */
 }
 
 .comic-navigation span.disabled {
-    /* Style for disabled/placeholder navigation slots */
     visibility: hidden; /* Hide the placeholder but keep its space */
     padding: 8px 12px; /* Match padding of active links for consistent spacing */
     display: inline-block; /* Ensure it takes space */
 }
 
-/* Comic Series Grid (Comic Hub) */
-.comic-posts-grid {
+
+/* --- Grid Layouts (Series, Issues, Standalone Comics) --- */
+.comic-series-grid,
+.comic-issue-grid,
+.standalone-comics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    /* Responsive grid: minimum 250px wide columns, auto-filling, max 1fr */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px; /* Space between grid items */
-    margin-top: 2em;
-}
-
-.comic-series-item {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     padding: 20px;
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 1200px; /* Max width for the entire grid */
+    margin: 30px auto; /* Center the grid on the page, add vertical margin */
 }
 
-.comic-series-item:hover {
+/* --- Styling for Individual Grid Items (Cards) --- */
+.comic-series-item,
+.comic-issue-item,
+.standalone-comic-item {
+    background-color: #ffffff; /* White background for the card */
+    border: 1px solid #e0e0e0; /* Very subtle light grey border */
+    border-radius: 8px; /* Slightly rounded corners */
+    overflow: hidden; /* Ensures image corners match border-radius */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* Very soft shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
+    display: flex; /* Use flexbox for internal content alignment */
+    flex-direction: column; /* Stack image, title, description vertically */
+    justify-content: flex-start; /* Align content from the top */
+    text-decoration: none; /* Remove underline for links wrapping items */
+    color: inherit; /* Inherit text color for the title */
+}
+
+.comic-series-item:hover,
+.comic-issue-item:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15); /* Slightly more prominent shadow on hover */
+}
+
+.standalone-comic-item:hover { /* More pronounced lift for standalone */
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.comic-issue-cover-wrapper {
+/* Link wrapping the entire grid item (series, issue) */
+.comic-series-item a,
+.comic-issue-item a {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit text color from the parent item */
+    display: flex; /* Make the anchor tag a flex container too */
+    flex-direction: column; /* Stack image, title, description within the link */
+    height: 100%; /* Make sure the entire clickable area fills the item */
+}
+
+/* Images within grid items (series logos, issue covers, standalone comic images) */
+.comic-series-item img.series-logo,
+.comic-issue-item img.issue-cover-grid,
+.standalone-comic-item img { /* Unified style for images in grid cards */
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Removes extra space below the image */
+    object-fit: contain; /* Ensures the image fits within its bounds */
+    padding: 15px; /* Padding around the image inside the card */
+    margin-bottom: 5px; /* Small space between image and title */
+    border-radius: 4px; /* Slightly rounded corners for standalone comic images */
+    margin: 0 auto 5px auto;
+}
+
+/* Override padding for standalone comic images if needed */
+.standalone-comic-item img {
+    padding: 0; /* Remove padding if image itself has border-radius */
+    margin-bottom: 1em; /* Adjust margin for standalone */
+}
+
+/* Titles within grid items */
+.comic-series-item .series-title-under-logo,
+.comic-issue-item .issue-title-in-grid,
+.standalone-comic-item h3 { /* Unified style for titles in grid cards */
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #000000; /* Black for titles */
+    padding: 0 15px 5px; /* Top/bottom padding for title */
+    margin: 0; /* Remove default margins */
+}
+
+/* Override font size for standalone comic titles */
+.standalone-comic-item h3 {
+    font-size: 1.2em; /* Smaller font size for standalone comic titles */
+    color: #333; /* Dark grey for standalone */
+    margin-bottom: 0.5em; /* Specific margin for standalone */
+}
+
+/* Descriptions within grid items */
+.comic-series-item .series-description,
+.comic-issue-item .issue-description-in-grid {
+    font-size: 0.9em;
+    color: #333333; /* Dark grey for body text */
+    padding: 0 15px 15px; /* Padding for description, more at bottom */
+    margin: 0; /* Remove default margins */
+    flex-grow: 1; /* Allows description to take up remaining space if card heights vary */
+    text-align: left; /* Description usually looks better left-aligned or justified */
+}
+
+/* --- Issue Cover and Vertical Scroll Display --- */
+.comic-issue-cover-wrapper { /* This class seems unused or a remnant, consider removing if not in use */
     margin-bottom: 1em;
 }
 
-.comic-issue-cover {
+.comic-issue-cover { /* This class seems unused or a remnant, consider removing if not in use */
     max-width: 100%;
     height: auto;
     border-radius: 5px;
 }
 
-.comic-series-title-grid,
-.comic-issue-title-grid {
-    font-size: 1.3em;
-    margin-top: 0.5em;
-    margin-bottom: 0.2em;
-    color: #333;
+/* Issue Cover Display on Issue Archive Page */
+.issue-cover-display {
+    margin: 2em auto; /* Center the cover with some vertical spacing */
+    max-width: 600px; /* Adjust max-width as needed */
+    text-align: center; /* Center the image within its container */
 }
 
-.comic-series-description,
-.comic-issue-description {
-    font-size: 0.9em;
-    color: #666;
+.issue-cover-display .full-issue-cover {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #eee; /* Light border around the cover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; /* Slightly rounded corners */
 }
 
-/* Vertical Scroll Issue View */
-.comic-vertical-scroll-wrapper {
-    margin-top: 2em;
-    line-height: 0; /* Remove vertical gaps between images */
+/* Vertical Scroll Issue View - CORRECTED SELECTORS */
+.comic-pages-scrolling-container { /* Corrected from .comic-vertical-scroll-wrapper */
+    margin-top: 2em; /* Keep original margin-top */
+    line-height: 0; /* Crucial for vertical images to remove gaps */
+    display: flex; /* Use flexbox for robust centering */
+    flex-direction: column;
+    align-items: center; /* Centers images horizontally in the column */
+    width: 100%;
+    max-width: 100%; /* Ensure it doesn't overflow its parent */
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
 
-.single-comic-page-in-vertical-issue {
-    margin-bottom: 0; /* Ensure no spacing between pages */
-    line-height: 0; /* Crucial for vertical images */
+.comic-page-scrolling-item { /* Corrected from .single-comic-page-in-vertical-issue */
+    margin: 0; /* Ensure no spacing between pages */
+    padding: 0; /* Ensure no padding causes gaps */
+    line-height: 0; /* Crucial for vertical images to remove gaps */
+    display: block; /* Ensure div doesn't add extra space */
+    width: 100%; /* Make container take full width */
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
 }
 
-/* Galleries */
+.comic-page-scrolling-item img.comic-page-scrolling-image { /* Corrected from img.comic-page-image */
+    max-width: 100%; /* Image should not exceed its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image, prevents inline spacing */
+    margin: 0; /* Ensure no extra margins */
+    padding: 0; /* Ensure no extra padding */
+    vertical-align: top; /* Can sometimes help with tiny remaining gaps */
+}
+
+/* Ensure the general img rule is robust - this might already be in your main style.css or a different file.
+   If it's already there and works fine, you can skip adding this exact block,
+   but ensure the properties like `display: block;` and `max-width: 100%;` are applied to all `img` tags.
+*/
+img {
+    border: none;
+    box-shadow: none;
+    max-width: 100%; /* Ensures all images are responsive by default */
+    height: auto;
+    display: block; /* Explicitly ensures block-level behavior for all images */
+}
+/* --- Galleries --- */
 .gallery {
     margin-bottom: 1.5em;
 }
@@ -169,22 +317,16 @@ article.post-type-comic {
     display: inline-block;
     text-align: center;
     vertical-align: top;
-    width: 100%;
-    max-width: 25%; /* Adjust as needed for column layout */
+    width: 100%; /* Default to full width for small screens */
     padding: 1%;
     box-sizing: border-box;
 }
 
-.gallery-columns-1 .gallery-item {
-    max-width: 100%;
-}
-.gallery-columns-2 .gallery-item {
-    max-width: 50%;
-}
-.gallery-columns-3 .gallery-item {
-    max-width: 33.33%;
-}
-/* Add more for other column counts */
+/* Gallery column adjustments */
+.gallery-columns-1 .gallery-item { max-width: 100%; }
+.gallery-columns-2 .gallery-item { max-width: 50%; }
+.gallery-columns-3 .gallery-item { max-width: 33.33%; }
+/* Add more for other column counts as needed */
 
 .gallery-caption {
     font-size: 0.8em;
@@ -192,15 +334,40 @@ article.post-type-comic {
     margin-top: 0.5em;
 }
 
-/* --- Media Query: max-width 768px (tablets and smaller) --- */
-@media only screen and (max-width: 768px) {
+/* --- Responsive Adjustments --- */
 
- /* Adjust comic grid for smaller screens */
-    .comic-posts-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+/* Tablets and smaller */
+@media (max-width: 768px) {
+    /* General grid adjustments */
+    .comic-series-grid,
+    .comic-issue-grid,
+    .standalone-comics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Smaller columns */
         gap: 20px;
+        padding: 15px;
     }
 
+    /* Image padding in grid items */
+    .comic-series-item img.series-logo,
+    .comic-issue-item img.issue-cover-grid {
+        padding: 10px;
+    }
+
+    /* Titles in grid items */
+    .comic-series-item .series-title-under-logo,
+    .comic-issue-item .issue-title-in-grid {
+        font-size: 1.15em;
+        padding: 0 10px 5px;
+    }
+
+    /* Descriptions in grid items */
+    .comic-series-item .series-description,
+    .comic-issue-item .issue-description-in-grid {
+        font-size: 0.85em;
+        padding: 0 10px 10px;
+    }
+
+    /* Comic navigation on smaller screens */
     .comic-navigation {
         flex-direction: column; /* Stack navigation buttons */
         gap: 5px; /* Reduce gap between stacked buttons */
@@ -213,15 +380,47 @@ article.post-type-comic {
     }
 
     .comic-navigation a {
-        width: calc(100% - 24px); /* Full width minus padding */
+        width: calc(100% - 30px); /* Full width minus total horizontal padding (15px * 2) */
         display: block; /* Ensure it takes full width */
     }
 }
 
-/* --- Media Query: max-width 480px (phones) --- */
-@media only screen and (max-width: 480px) {
+/* Smaller tablets/large phones */
+@media (max-width: 600px) {
+    .comic-navigation {
+        align-items: stretch; /* Make them full width */
+        gap: 8px; /* Override 768px gap to 8px */
+    }
+    .comic-navigation a {
+        width: 100%; /* Full width buttons (override calc(100%-24px)) */
+        padding: 10px 15px; /* Override 768px padding */
+    }
+    .comic-navigation span {
+        margin: 0 !important; /* Remove auto margins when stacked */
+    }
+    .comic-navigation div { /* Target the empty div spacer */
+        display: none; /* Hide the spacer when stacking */
+    }
+}
 
- /* Comic navigation font size for mobile */
+/* Phones */
+@media (max-width: 480px) {
+    /* General grid adjustments */
+    .comic-series-grid,
+    .comic-issue-grid,
+    .standalone-comics-grid {
+        grid-template-columns: 1fr; /* Single column on very small phones */
+        padding: 10px;
+    }
+    /* Centering single column items */
+    .comic-series-item,
+    .comic-issue-item,
+    .standalone-comic-item {
+        margin: 0 auto; /* Center single column items */
+        max-width: 250px; /* Limit width for very small screens */
+    }
+
+    /* Comic navigation font size for mobile */
     .comic-navigation a {
         font-size: 0.9em;
     }

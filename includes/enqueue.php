@@ -17,7 +17,7 @@ function comixcore_comics_enqueue_public_assets() {
         'comixcore-comics-style', // Unique handle for your stylesheet
         COMIXCORE_COMICS_PLUGIN_URL . 'assets/css/style-comics.css', // Path to your stylesheet
         array(), // Dependencies (e.g., array('your-theme-style') if you want it to load after theme styles)
-        filemtime( COMIXCORE_COMICS_PLUGIN_DIR . 'assets/css/style-comics.css' ), // Version based on file modification time for cache busting
+        COMIXCORE_COMICS_VERSION, // Version based on plugin version for cache busting
         'all' // Media type
     );
 
@@ -29,23 +29,54 @@ add_action( 'wp_enqueue_scripts', 'comixcore_comics_enqueue_public_assets' );
  * Enqueue plugin-specific stylesheets and scripts for the WordPress admin area.
  */
 function comixcore_comics_enqueue_admin_assets() {
-    // Only enqueue on post edit screens and for the 'comic' post type
-    global $pagenow, $post_type;
+    // Get current screen information
+    $screen = get_current_screen();
 
-    if ( ('post.php' == $pagenow || 'post-new.php' == $pagenow) && 'comic' == $post_type ) {
-        // Enqueue WordPress Media Uploader scripts and styles
-        wp_enqueue_media();
+    // Exit if screen object is not available
+    if ( ! $screen ) {
+        return;
+    }
 
-        // Enqueue our custom script for the comic meta box
+    // Enqueue on 'comic' post edit screens (both 'Add New' and 'Edit')
+    if ( ('post' === $screen->base || 'post-new' === $screen->base) && 'comic' === $screen->post_type ) {
+        wp_enqueue_script( 'jquery' ); // Ensure jQuery is loaded
+        wp_enqueue_media(); // Enqueue WordPress Media Uploader scripts and styles
+
         wp_enqueue_script(
-            'comixcore-comics-meta-box-script',
-            COMIXCORE_COMICS_PLUGIN_URL . 'assets/js/comic-meta-box.js',
-            array('jquery'), // Depends on jQuery
-            filemtime( COMIXCORE_COMICS_PLUGIN_DIR . 'assets/js/comic-meta-box.js' ),
+            'comixcore-comics-meta-box-script', // Unique handle for your script
+            COMIXCORE_COMICS_PLUGIN_URL . 'assets/js/comic-meta-box.js', // Corrected path
+            array('jquery', 'wp-mediaelement'), // Dependencies: jQuery and wp-mediaelement are crucial
+            COMIXCORE_COMICS_VERSION, // Use plugin version for cache busting
             true // Load in footer
         );
     }
 
-    // You can add other admin-specific styles or scripts here if needed.
+    // Enqueue on 'comic_series' and 'comic_issues' taxonomy edit screens ('edit-tags' page)
+    if ( 'edit-tags' === $screen->base && in_array( $screen->taxonomy, array( 'comic_series', 'comic_issues' ) ) ) {
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_media();
+
+        wp_enqueue_script(
+            'comixcore-comics-meta-box-script',
+            COMIXCORE_COMICS_PLUGIN_URL . 'assets/js/comic-meta-box.js', // Corrected path
+            array('jquery', 'wp-mediaelement'), // Dependencies
+            COMIXCORE_COMICS_VERSION,
+            true
+        );
+    }
+
+    // Enqueue on specific term edit screens ('term' page, when editing an individual term)
+    if ( 'term' === $screen->base && in_array( $screen->taxonomy, array( 'comic_series', 'comic_issues' ) ) ) {
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_media();
+
+        wp_enqueue_script(
+            'comixcore-comics-meta-box-script',
+            COMIXCORE_COMICS_PLUGIN_URL . 'assets/js/comic-meta-box.js', // Corrected path
+            array('jquery', 'wp-mediaelement'), // Dependencies
+            COMIXCORE_COMICS_VERSION,
+            true
+        );
+    }
 }
 add_action( 'admin_enqueue_scripts', 'comixcore_comics_enqueue_admin_assets' );

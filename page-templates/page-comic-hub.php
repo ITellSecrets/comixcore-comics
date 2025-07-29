@@ -55,8 +55,13 @@ get_header(); // Loads the header.php template
                                         <h2 class="series-title-under-logo"><?php echo esc_html( $series->name ); ?></h2>
                                     <?php else : // Fallback if no logo is set ?>
                                         <h2><?php echo esc_html( $series->name ); ?></h2>
+                                    <?php endif; ?>
+
+                                    <?php
+                                    // Get and display the series description
+                                    if ( ! empty( $series->description ) ) : ?>
+                                        <p class="series-description"><?php echo wpautop( esc_html( $series->description ) ); ?></p>
                                     <?php endif;
-                                    // ****************************************
                                     ?>
                                 </a>
                             </div><?php
